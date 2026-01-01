@@ -3,141 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Chat | Mini-WhatsApp</title>
+    <title>New Chat | Mini-WhatsApp Studio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #0f1012;
-            --card-gray: #1c1e21;
-            --wa-green: #25D366;
-            --input-focus: #2a2d31;
+            --bg-white: #ffffff;
+            --text-black: #000000;
+            --accent-yellow: #FFD700; /* Gold Yellow */
+            --input-bg: #f8f9fa;
+            --border-light: #e9ecef;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-white);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #ffffff;
-            height: 100vh;
+            color: var(--text-black);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0;
+            /* Background decoration to match landing page */
+            background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(0, 0, 0, 0.05), transparent 40%);
         }
 
-        /* Fancy Form Card */
+        /* Responsive Form Container */
         .form-container {
-            background-color: var(--card-gray);
-            border: 1px solid #333;
-            padding: 40px;
+            background-color: var(--bg-white);
+            border: 2px solid var(--text-black);
+            padding: clamp(20px, 5vw, 40px);
             border-radius: 30px;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            max-width: 480px;
+            box-shadow: 15px 15px 0px var(--accent-yellow); /* Brutalist design shadow */
+            margin: 20px;
         }
 
         h3 {
-            font-weight: 700;
+            font-weight: 800;
             margin-bottom: 25px;
-            background: linear-gradient(to right, #fff, var(--wa-green));
-            -webkit-background-clip: text;
-            -webkit-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            border-bottom: 5px solid var(--accent-yellow);
+            display: inline-block;
+            padding-bottom: 5px;
         }
 
-        /* Modern Input Styling */
         .form-label {
             font-size: 0.85rem;
-            color: #888;
+            color: var(--text-black);
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 800;
+            text-transform: uppercase;
         }
 
         .custom-input {
-            background-color: #121212;
-            border: 1px solid #333;
+            background-color: var(--input-bg);
+            border: 2px solid var(--border-light);
             border-radius: 12px;
-            color: white;
-            padding: 12px 15px;
+            color: var(--text-black);
+            padding: 14px 16px;
             width: 100%;
             margin-bottom: 20px;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .custom-input:focus {
             outline: none;
-            border-color: var(--wa-green);
-            background-color: var(--input-focus);
-            box-shadow: 0 0 10px rgba(37, 211, 102, 0.2);
+            border-color: var(--text-black);
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
+        }
+
+        .custom-input::placeholder {
+            color: #adb5bd;
+            font-weight: 400;
         }
 
         textarea.custom-input {
-            min-height: 120px;
+            min-height: 100px;
             resize: none;
         }
 
-        /* Fancy Button */
+        /* High Contrast Button */
         .btn-create {
-            background: var(--wa-green);
-            color: #000;
-            font-weight: 700;
+            background: var(--text-black);
+            color: var(--accent-yellow);
+            font-weight: 800;
             border: none;
-            padding: 14px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 14px;
             width: 100%;
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .btn-create:hover {
+            background-color: #333;
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
-            background-color: #21bd5b;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            color: var(--accent-yellow);
         }
 
         .back-link {
             display: block;
             text-align: center;
             margin-top: 20px;
-            color: #666;
+            color: #999;
             text-decoration: none;
             font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
         }
 
         .back-link:hover {
-            color: var(--wa-green);
+            color: var(--text-black);
+            text-decoration: underline;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 576px) {
+            .form-container {
+                box-shadow: 8px 8px 0px var(--accent-yellow);
+                border-radius: 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container d-flex justify-content-center px-3">
+    <div class="container d-flex justify-content-center">
         <div class="form-container">
-            <h3>Write new chat...</h3>
+            <h3>New Message</h3>
 
             <form action="/chats" method="POST">
                 
                 <div class="mb-1">
-                    <label class="form-label">Sender Name</label>
-                    <input type="text" placeholder="Who are you?" name="from" class="custom-input" required />
+                    <label class="form-label">Sender</label>
+                    <input type="text" placeholder="Enter your name" name="from" class="custom-input" required />
                 </div>
 
                 <div class="mb-1">
-                    <label class="form-label">Recipient Name</label>
-                    <input type="text" placeholder="Who are you messaging?" name="to" class="custom-input" required />
+                    <label class="form-label">Recipient</label>
+                    <input type="text" placeholder="Who is this for?" name="to" class="custom-input" required />
                 </div>
 
                 <div class="mb-1">
-                    <label class="form-label">Your Message</label>
-                    <textarea name="msg" class="custom-input" placeholder="Type a message..."></textarea>
+                    <label class="form-label">Message</label>
+                    <textarea name="msg" class="custom-input" placeholder="What's on your mind?" required></textarea>
                 </div>
 
-                <button type="submit" class="btn-create">Create Chat</button>
+                <button type="submit" class="btn-create">Send Chat</button>
                 
-                <a href="/chats" class="back-link">← Cancel and go back</a>
+                <a href="/chats" class="back-link">Cancel and return</a>
             </form>
         </div>
     </div>

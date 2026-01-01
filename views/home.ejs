@@ -3,136 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RESTful API Portfolio | Mini-WhatsApp</title>
+    <title>Backend Engineer Portfolio | Rishabh Dubey</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #08090a;
-            --wa-green: #25D366;
-            --wa-teal: #128C7E;
-            --card-glass: rgba(255, 255, 255, 0.03);
-            --border-glass: rgba(255, 255, 255, 0.1);
+            --bg-white: #ffffff;
+            --text-black: #000000;
+            --accent-yellow: #FFD700;
+            --card-gray: #f8f9fa;
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-white);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #ffffff;
+            color: var(--text-black);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Animated Background Blobs */
+        /* Brutalist Style Blob */
         .blob {
             position: absolute;
             width: 400px;
             height: 400px;
-            background: linear-gradient(135deg, var(--wa-green), var(--wa-teal));
-            filter: blur(80px);
+            background: var(--accent-yellow);
+            filter: blur(140px);
             border-radius: 50%;
             z-index: -1;
             opacity: 0.15;
-            animation: move 20s infinite alternate;
+            top: -150px;
+            right: -100px;
         }
 
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(50%, 20%); }
-        }
-
-        /* Navbar */
         .navbar {
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-glass);
+            background: var(--bg-white);
+            border-bottom: 3px solid var(--text-black);
+            padding: 1rem 0;
         }
 
-        /* Hero */
         .hero {
-            padding: 140px 0 80px 0;
+            padding: clamp(120px, 15vh, 200px) 0 80px 0;
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.1) 0%, var(--bg-white) 100%);
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 800;
-            background: linear-gradient(to bottom right, #fff 30%, #666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -2px;
+            color: var(--text-black);
+            letter-spacing: -3px;
+            line-height: 1;
         }
 
         .stack-badge {
-            background: var(--card-glass);
-            border: 1px solid var(--border-glass);
-            padding: 6px 16px;
-            border-radius: 50px;
+            background: var(--text-black);
+            color: var(--accent-yellow);
+            padding: 10px 20px;
+            border-radius: 4px;
             font-size: 0.8rem;
-            color: #aaa;
+            font-weight: 800;
             margin: 5px;
-            display: inline-block;
+            display: inline-flex;
+            text-transform: uppercase;
         }
 
-        /* CRUD Cards */
+        /* Documentation Style Cards */
         .crud-card {
-            background: var(--card-glass);
-            border: 1px solid var(--border-glass);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 30px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--bg-white);
+            border: 3px solid var(--text-black);
+            padding: 35px;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 10px 10px 0px var(--text-black);
         }
 
         .crud-card:hover {
-            border-color: var(--wa-green);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(37, 211, 102, 0.1);
+            transform: translate(-5px, -5px);
+            box-shadow: 15px 15px 0px var(--accent-yellow);
         }
-
-        /* REST Table */
-        .api-table {
-            background: var(--card-glass);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-        }
-
-        .api-table th { background: rgba(255,255,255,0.05); color: #888; border: none; }
-        .api-table td { border-top: 1px solid var(--border-glass); vertical-align: middle; }
 
         .method-tag {
             font-family: 'Fira Code', monospace;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 800;
+            color: var(--text-black);
+            border: 2px solid var(--text-black);
+            margin-bottom: 15px;
+            display: inline-block;
         }
 
-        .get { color: #61afef; background: rgba(97, 175, 239, 0.1); }
-        .post { color: #98c379; background: rgba(152, 195, 121, 0.1); }
-        .patch { color: #e5c07b; background: rgba(229, 192, 123, 0.1); }
-        .delete { color: #e06c75; background: rgba(224, 108, 117, 0.1); }
+        .get { background: #61afef; }
+        .post { background: #98c379; }
+        .patch { background: #e5c07b; }
+        .delete { background: #e06c75; }
 
-        .btn-primary-wa {
-            background: var(--wa-green);
-            color: #000;
-            font-weight: 700;
-            padding: 14px 32px;
-            border-radius: 14px;
-            border: none;
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #eee;
+            padding: 8px 14px;
+            border-radius: 4px;
+            color: var(--text-black);
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .btn-main {
+            background: var(--text-black);
+            color: var(--accent-yellow);
+            font-weight: 800;
+            padding: 18px 45px;
+            border-radius: 8px;
+            border: 3px solid var(--text-black);
             transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
         }
 
-        .btn-primary-wa:hover {
-            background: #fff;
+        .btn-main:hover {
+            background: var(--accent-yellow);
+            color: var(--text-black);
             transform: scale(1.05);
         }
 
-        .code-window {
-            background: #1a1c1e;
-            border-radius: 20px;
-            border: 1px solid var(--border-glass);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        /* Backend Skills Section */
+        .skill-item {
+            border: 2px solid #000;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            background: #fff;
+        }
+
+        .skill-item i { font-size: 1.5rem; margin-right: 15px; color: var(--accent-yellow); -webkit-text-stroke: 1px #000; }
+
+        footer {
+            border-top: 3px solid var(--text-black);
+            padding: 80px 0;
+            background: #fafafa;
+        }
+
+        .social-link {
+            color: var(--text-black);
+            font-size: 2rem;
+            transition: 0.3s;
+        }
+
+        .social-link:hover { color: var(--accent-yellow); transform: translateY(-5px); }
+
+        @media (max-width: 576px) {
+            .hero-btns { flex-direction: column; width: 100%; padding: 0 20px; }
+            .btn-main { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -140,32 +169,31 @@
 
     <div class="blob"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">
-                <i class="bi bi-braces text-success me-2"></i>DEV_PROJECT
+            <a class="navbar-brand fw-bold d-flex align-items-center text-black" href="#">
+                <i class="bi bi-terminal-fill me-2"></i>
+               <span>NEXUS_API</span> </a>
             </a>
-            <div class="d-flex gap-3">
-                <a href="/chats" class="btn btn-sm btn-outline-light rounded-pill px-3">Live Dashboard</a>
-            </div>
+            <a href="/chats" class="btn btn-dark fw-bold px-4">Live Dashboard</a>
         </div>
     </nav>
 
-    <header class="hero text-center">
+    <header class="hero text-center container-fluid">
         <div class="container">
             <div class="mb-4">
-                <span class="stack-badge"><i class="bi bi-nodejs text-success me-2"></i>Node.js</span>
-                <span class="stack-badge"><i class="bi bi-database text-info me-2"></i>MongoDB</span>
-                <span class="stack-badge"><i class="bi bi-server text-warning me-2"></i>Express</span>
+                <span class="stack-badge">API Architecture</span>
+                <span class="stack-badge">Database Design</span>
+                <span class="stack-badge">Node / Express</span>
             </div>
-            <h1 class="hero-title">Full-Stack RESTful <br> Message Engine.</h1>
-            <p class="lead text-secondary mt-4 mb-5 mx-auto" style="max-width: 650px;">
-                A technical showcase of <b>CRUD architecture</b>, asynchronous database operations, 
-                and server-side rendering using the EJS engine.
+            <h1 class="hero-title">Backend & API <br> Systems Engineer.</h1>
+            <p class="text-muted mt-4 mb-5 mx-auto px-3 fw-semibold fs-5" style="max-width: 800px;">
+                Specializing in building <b>Stateless RESTful Services</b>, Mongoose-driven data persistence, 
+                and high-performance server logic.
             </p>
-            <div class="d-flex justify-content-center gap-3">
-                <a href="/chats" class="btn-primary-wa text-decoration-none">Explore API</a>
-                <a href="https://github.com" class="btn btn-outline-light px-4 py-3 rounded-4 border-secondary">
+            <div class="d-flex justify-content-center gap-3 hero-btns">
+                <a href="/chats" class="btn-main">Test API Dashboard</a>
+                <a href="https://github.com/RishabhDubeyCS" target="_blank" class="btn btn-outline-dark fw-bold px-4 py-3 border-3">
                     <i class="bi bi-github me-2"></i>Source Code
                 </a>
             </div>
@@ -173,71 +201,88 @@
     </header>
 
     <section class="container py-5">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="crud-card">
-                    <i class="bi bi-cloud-arrow-down text-success fs-2"></i>
-                    <h4 class="mt-3">Data Retrieval</h4>
-                    <p class="text-secondary small">Optimized Mongoose queries to fetch documents with real-time timestamps.</p>
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-800 text-uppercase mb-4">Technical Core</h2>
+                <p class="text-muted mb-4">My approach to development focuses on clean architectural patterns and strict REST compliance.</p>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="skill-item"><i class="bi bi-hdd-network"></i> Stateless Architecture</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="skill-item"><i class="bi bi-shield-lock"></i> Middleware Logic</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="skill-item"><i class="bi bi-database-check"></i> Schema Validation</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="skill-item"><i class="bi bi-arrow-repeat"></i> CRUD Life Cycle</div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="crud-card">
-                    <i class="bi bi-pencil-square text-success fs-2"></i>
-                    <h4 class="mt-3">State Management</h4>
-                    <p class="text-secondary small">Handling PATCH and DELETE requests using method-override middleware.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="crud-card">
-                    <i class="bi bi-shield-check text-success fs-2"></i>
-                    <h4 class="mt-3">Input Validation</h4>
-                    <p class="text-secondary small">Server-side logic to ensure data integrity before persisting to MongoDB.</p>
-                </div>
+            <div class="col-lg-6 text-center">
+                 
+                 <p class="mt-3 small fw-bold text-uppercase">Project Logic: MVC Implementation</p>
             </div>
         </div>
     </section>
 
     <section class="container py-5">
-        <h3 class="fw-bold mb-4 text-center">API Documentation</h3>
-        <div class="api-table p-2">
-            <table class="table table-dark table-hover mb-0">
-                <thead>
-                    <tr>
-                        <th>Method</th>
-                        <th>Endpoint</th>
-                        <th>Functionality</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="method-tag get">GET</span></td>
-                        <td><code>/chats</code></td>
-                        <td class="text-secondary">List all messages (Index)</td>
-                    </tr>
-                    <tr>
-                        <td><span class="method-tag post">POST</span></td>
-                        <td><code>/chats</code></td>
-                        <td class="text-secondary">Initialize new message (Create)</td>
-                    </tr>
-                    <tr>
-                        <td><span class="method-tag patch">PATCH</span></td>
-                        <td><code>/chats/:id</code></td>
-                        <td class="text-secondary">Partial document update (Update)</td>
-                    </tr>
-                    <tr>
-                        <td><span class="method-tag delete">DELETE</span></td>
-                        <td><code>/chats/:id</code></td>
-                        <td class="text-secondary">Resource destruction (Delete)</td>
-                    </tr>
-                </tbody>
-            </table>
+        <h3 class="fw-bold mb-5 text-center text-uppercase">API Documentation</h3>
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <div class="crud-card">
+                    <span class="method-tag get">GET</span>
+                    <h5 class="fw-bold">Index: List Resources</h5>
+                    <p class="text-muted small">Queries MongoDB using <code>.find()</code>. Demonstrates the concept of <b>Stateless Read</b> operations.</p>
+                    <code>Route: /chats</code>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="crud-card">
+                    <span class="method-tag post">POST</span>
+                    <h5 class="fw-bold">Store: Create Instance</h5>
+                    <p class="text-muted small">Handles <code>POST</code> requests via body-parser middleware to persist new chat documents.</p>
+                    <code>Route: /chats</code>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="crud-card">
+                    <span class="method-tag patch">PATCH</span>
+                    <h5 class="fw-bold">Update: Selective Modification</h5>
+                    <p class="text-muted small">Uses <code>method-override</code> and <code>findByIdAndUpdate</code> for partial resource updates.</p>
+                    <code>Route: /chats/:id</code>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="crud-card">
+                    <span class="method-tag delete">DELETE</span>
+                    <h5 class="fw-bold">Destroy: Resource Deletion</h5>
+                    <p class="text-muted small">Implements resource removal targeting unique <code>_id</code> parameters within the database.</p>
+                    <code>Route: /chats/:id</code>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer class="text-center py-5">
-        <hr class="border-secondary opacity-25">
-        <p class="text-secondary small mt-4">Handcrafted by Rishabh Dubey | Full Stack Developer Candidate</p>
+    <footer class="text-center">
+        <div class="container">
+            <h4 class="fw-800 text-uppercase mb-2">Connect with the Engineer</h4>
+            <div class="d-flex justify-content-center gap-4 mb-5 mt-4">
+                <a href="https://www.linkedin.com/in/rishabh-dubey-362500298/" target="_blank" class="social-link" title="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+                <a href="https://github.com/RishabhDubeyCS" target="_blank" class="social-link" title="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="mailto:rishabhdubeycse@gmail.com" class="social-link" title="Email">
+                    <i class="bi bi-envelope-at-fill"></i>
+                </a>
+            </div>
+            <hr class="border-2 border-dark opacity-100">
+            <p class="text-black fw-800 mb-0 mt-4">Rishabh Dubey © 2026</p>
+            <p class="text-muted small">Built with Node.js, MongoDB & REST Principles</p>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
