@@ -1,0 +1,14 @@
+# Node modules ignore
+node_modules/
+
+# Environment files ignore
+.env
+
+# Log files ignore
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS system files ignore
+.DS_Store
+Thumbs.db

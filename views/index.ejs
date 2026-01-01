@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini-WhatsApp | Dark Edition</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --card-gray: #1e1e1e;
+            --wa-green: #25D366;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .header-section {
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, #1f1f1f 0%, #121212 100%);
+            border-bottom: 1px solid #333;
+            margin-bottom: 40px;
+        }
+
+        .chat-card {
+            background-color: var(--card-gray);
+            border: 1px solid #333;
+            border-radius: 22px;
+            color: white;
+            transition: all 0.3s ease-in-out;
+            height: 100%;
+        }
+
+        .chat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--wa-green);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2) !important;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--wa-green), #128C7E);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+        }
+
+        .message-box {
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            padding: 1.2rem;
+            margin: 15px 0 10px 0;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            border-right: 3px solid var(--wa-green);
+        }
+
+        .timestamp {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-bottom: 15px;
+            display: block;
+            font-weight: 600;
+        }
+
+        .btn-reply {
+            background-color: transparent;
+            border: 1px solid var(--wa-green);
+            color: var(--wa-green);
+            border-radius: 50px;
+            padding: 5px 20px;
+            transition: 0.3s;
+        }
+
+        .btn-reply:hover {
+            background-color: var(--wa-green);
+            color: black;
+        }
+
+        .btn-new {
+            background-color: var(--wa-green);
+            color: black;
+            border: none;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .btn-new:hover {
+            transform: scale(1.05);
+            background-color: #1ebd58;
+        }
+        
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--wa-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            font-size: 24px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header-section text-center">
+    <div class="container">
+        <h1 class="fw-bold">Mini-WhatsApp <span style="color: var(--wa-green);">Dark</span></h1>
+        <form method="GET" action="/chats/new" class="d-inline-block my-3">
+            <button class="btn-new">New Chat</button>
+        </form>
+        <p class="text-secondary small">You have <%= chats.length %> messages in your inbox</p>
+    </div>
+</header>
+
+<div class="container pb-5">
+    <div class="row g-4">
+        <% for(let chat of chats) { %>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card chat-card shadow">
+                    <div class="card-body p-4">
+
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="avatar me-3">
+                                <%= chat.from.charAt(0).toUpperCase() %>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-0 fw-bold"><%= chat.from %></h6>
+                                <span class="text-success small">To: <%= chat.to %></span>
+                            </div>
+                        </div>
+
+                        <div class="message-box">
+                            <p class="mb-0"><%= chat.msg %></p>
+                        </div>
+
+                        <span class="timestamp">
+                            <%= chat.created_at.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) %> · 
+                            <%= chat.created_at.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                        </span>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <form method="GET" action="/chats/<%= chat._id %>/edit" class="m-0">
+                                <button class="btn btn-reply btn-sm">✏️ Edit</button>
+                            </form>
+
+                            <form method="POST" action="/chats/<%= chat._id %>?_method=DELETE" class="m-0">
+                                <button class="btn btn-reply btn-sm">🗑️ Delete</button>
+                                </form>
+                           
+                        </div>
+
+                        <span class="text-muted" style="font-size: 0.8rem;">Seen</span>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<a href="/chats/new" class="fab">+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
