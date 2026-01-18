@@ -140,10 +140,30 @@ Profile system with avatars and online status
 Made with Node.js, Express, MongoDB, Mongoose, and EJS
 
 
+## 🧩 Middleware Added
+
+This project uses Express middleware to follow **RESTful and production-style practices**.
+
+- **Body Parser Middleware**  
+  Parses form data using `express.urlencoded()` and makes it available in `req.body`.
+
+- **Method Override**  
+  Enables `PATCH` and `DELETE` requests from HTML forms using `method-override`.
+
+- **Centralized Error Handling**  
+  Handles all application errors in one place using Express error-handling middleware.
+
+- **Custom `ExpressError` Class**  
+  Attaches HTTP status codes to errors for clean and consistent error handling.
+
+- **Async Error Forwarding**  
+  Uses `try/catch` and `next(err)` to safely handle async route errors.
+
+This middleware setup improves **code readability, error safety, and REST compliance**.
 
 
 
-If you'd like, I can also:
+If you'd like, I can also
 
 ✔ Fix grammar and keep it more concise  
 ✔ Add screenshots of your UI for GitHub  
