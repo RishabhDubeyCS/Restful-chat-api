@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-WhatsApp | Light Edition</title>
+    <title>Live Terminal | Mini-WhatsApp</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -11,19 +11,37 @@
 
     <style>
         :root {
-            --bg-white: #ffffff;
-            --card-white: #f8f9fa;
-            --accent-yellow: #FFD700; /* Gold Yellow */
-            --text-black: #000000;
-            --text-gray: #4a4a4a;
-            --border-light: #e9ecef;
+            --bg-dark: #0a0b1e;
+            --bg-card: #16183d;
+            --accent-primary: #7c4dff;
+            --accent-secondary: #00e5ff;
+            --text-main: #ffffff;
+            --text-muted: #b0b3d6;
+            --border-light: rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 10px 20px rgba(124, 77, 255, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0, 229, 255, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 10px 20px rgba(124, 77, 255, 0.3); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         body {
-            background-color: var(--bg-white);
+            background-color: var(--bg-dark);
             font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text-black);
+            color: var(--text-main);
             overflow-x: hidden;
+            animation: fadeIn 0.8s ease-out;
         }
 
         /* Nav Bar / Top Actions */
@@ -34,63 +52,71 @@
         }
 
         .btn-home {
-            color: var(--text-black);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 700;
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: 0.3s;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             padding: 8px 16px;
             border-radius: 50px;
-            border: 1px solid transparent;
+            border: 1px solid var(--border-light);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .btn-home:hover {
-            background-color: var(--card-white);
-            border-color: var(--accent-yellow);
+            background: var(--accent-primary);
+            color: #fff;
+            transform: translateX(-5px);
+            border-color: transparent;
         }
 
         /* Responsive Header Section */
         .header-section {
             padding: clamp(2rem, 6vh, 4rem) 1rem;
-            background: linear-gradient(180deg, rgba(255, 215, 0, 0.2) 0%, var(--bg-white) 100%);
+            background: radial-gradient(circle at top, rgba(124, 77, 255, 0.15) 0%, var(--bg-dark) 100%);
             border-bottom: 1px solid var(--border-light);
             margin-bottom: clamp(1.5rem, 5vh, 3rem);
         }
 
         .hero-title {
-            font-size: clamp(2rem, 6vw, 3.8rem);
+            font-size: clamp(1.8rem, 8vw, 3.8rem);
             font-weight: 800;
-            color: var(--text-black);
+            background: linear-gradient(135deg, #fff 30%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -1.5px;
+            line-height: 1.1;
         }
 
         /* High-Contrast Cards */
         .chat-card {
-            background-color: var(--card-white);
+            background-color: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 28px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             height: 100%;
             display: flex;
             flex-direction: column;
             padding: 24px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .chat-card:hover {
-            transform: translateY(-10px);
-            background-color: #ffffff;
-            border-color: var(--accent-yellow);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--accent-primary);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
 
         .avatar {
             width: 52px;
             height: 52px;
-            background: var(--text-black);
-            color: var(--accent-yellow);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -98,32 +124,48 @@
             font-weight: 800;
             font-size: 1.2rem;
             flex-shrink: 0;
+            transition: 0.3s;
+            box-shadow: 0 8px 16px rgba(124, 77, 255, 0.3);
+        }
+
+        .chat-card:hover .avatar {
+            transform: rotate(-10deg) scale(1.1);
         }
 
         .message-box {
-            background-color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.2);
             border-radius: 20px;
             padding: 1.25rem;
             margin: 1.25rem 0;
             border: 1px solid var(--border-light);
-            border-left: 5px solid var(--accent-yellow);
+            border-left: 5px solid var(--accent-primary);
             flex-grow: 1;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            transition: 0.3s;
         }
 
-        .msg-text { color: var(--text-gray); font-size: 1rem; line-height: 1.6; }
+        .chat-card:hover .message-box {
+            border-left-width: 8px;
+            border-left-color: var(--accent-secondary);
+        }
+
+        .msg-text { color: var(--text-muted); font-size: 1rem; line-height: 1.6; }
 
         .to-text {
-            color: var(--text-black);
+            color: var(--accent-secondary);
             font-weight: 700;
-            font-size: 0.8rem;
-            background: var(--accent-yellow);
-            padding: 2px 10px;
+            font-size: 0.75rem;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 4px 12px;
             border-radius: 50px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            text-transform: uppercase;
         }
 
         .timestamp {
             font-size: 0.75rem;
-            color: #999;
+            color: #666e99;
             margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
@@ -131,41 +173,77 @@
         }
 
         .btn-custom {
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 8px 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            transition: 0.3s;
-            border: 2px solid var(--text-black);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .btn-edit { background: var(--accent-yellow); color: var(--text-black); }
-        .btn-edit:hover { background: var(--text-black); color: var(--accent-yellow); }
+        .btn-edit { 
+            background: rgba(124, 77, 255, 0.1); 
+            color: var(--accent-primary);
+            border-color: rgba(124, 77, 255, 0.2);
+            text-decoration: none;
+        }
+        .btn-edit:hover { 
+            background: var(--accent-primary); 
+            color: #fff; 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 16px rgba(124, 77, 255, 0.4);
+        }
 
-        .btn-delete { border-color: transparent; color: #dc3545; background: rgba(220, 53, 69, 0.05); }
-        .btn-delete:hover { background: #dc3545; color: #fff; }
+        .btn-delete { 
+            color: #e06c75; 
+            background: rgba(224, 108, 117, 0.05);
+            border-color: rgba(224, 108, 117, 0.1);
+        }
+        .btn-delete:hover { 
+            background: #e06c75; 
+            color: #fff; 
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(224, 108, 117, 0.4);
+        }
 
         .btn-new {
-            background-color: var(--text-black);
-            color: var(--accent-yellow);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #fff;
             border: none;
             padding: 12px 35px;
             border-radius: 50px;
             font-weight: 800;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 20px rgba(124, 77, 255, 0.3);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
         }
 
-        .btn-new:hover { transform: translateY(-3px); background-color: #333; }
+        .btn-new:hover { 
+            transform: translateY(-5px) scale(1.05); 
+            box-shadow: 0 15px 30px rgba(0, 229, 255, 0.5);
+            color: #fff;
+        }
 
         .fab {
             position: fixed; bottom: 30px; right: 30px; width: 64px; height: 64px;
-            background: var(--text-black); border-radius: 20px; display: flex;
-            align-items: center; justify-content: center; color: var(--accent-yellow);
-            font-size: 28px; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            text-decoration: none; transition: 0.3s; z-index: 1000;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 20px; display: flex;
+            align-items: center; justify-content: center; color: #fff;
+            font-size: 28px; box-shadow: 0 15px 30px rgba(124, 77, 255, 0.4);
+            text-decoration: none; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000;
+            animation: pulse 3s infinite;
         }
         
-        .fab:hover { transform: scale(1.1); }
+        .fab:hover { 
+            transform: scale(1.2) rotate(90deg); 
+            animation: none; 
+            box-shadow: 0 20px 40px rgba(0, 229, 255, 0.6);
+            color: #fff;
+        }
 
         @media (max-width: 576px) {
             .hero-btns .btn-new { width: 100%; }
@@ -184,19 +262,20 @@
 
 <header class="header-section text-center">
     <div class="container">
-        <h1 class="hero-title">Mini-WhatsApp <span style="text-decoration: underline var(--accent-yellow) 6px;">Studio</span></h1>
+        <h1 class="hero-title">Live <span style="border-bottom: 4px solid var(--accent-primary);">Terminal</span></h1>
         <p class="text-muted fw-semibold small mt-3">Full-Stack RESTful API Showcase</p>
         <div class="mt-4 hero-btns">
-            <a href="/chats/new" class="btn btn-new">Start New Chat</a>
+            <a href="/chats/new" class="btn btn-new">Initialize New Chat</a>
         </div>
     </div>
 </header>
 
 <main class="container pb-5">
     <div class="row g-4">
-        <% for(let chat of chats) { %>
+        <% for(let i=0; i < chats.length; i++) { 
+            let chat = chats[i]; %>
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card chat-card shadow-sm">
+                <div class="card chat-card shadow-sm" style="animation-delay: <%= i * 0.1 %>s">
                     <div class="d-flex align-items-center">
                         <div class="avatar me-3">
                             <%= chat.from.charAt(0).toUpperCase() %>
@@ -225,7 +304,7 @@
                                 <button class="btn-custom btn-delete">Delete</button>
                             </form>
                         </div>
-                        <i class="bi bi-check2-all fs-5" style="color: var(--accent-yellow);" title="Delivered"></i>
+                        <i class="bi bi-cpu fs-5" style="color: var(--accent-secondary);" title="Processed"></i>
                     </div>
                 </div>
             </div>
@@ -235,7 +314,7 @@
 
 <a href="/chats/new" class="fab" title="New Chat"><i class="bi bi-plus-lg"></i></a>
 
-<footer class="text-center py-5 border-top">
+<footer class="text-center py-5 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
     <p class="small text-muted mb-0">Rishabh Dubey | Full Stack Developer Candidate | 2026</p>
 </footer>
 
